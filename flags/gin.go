@@ -3,14 +3,16 @@ package flags
 import (
 	"fmt"
 	"github.com/Fu-XDU/mingfu_go_common/file"
+	"github.com/labstack/gommon/log"
 	"github.com/urfave/cli/v2"
 	"strconv"
 )
 
 var (
-	ServerPort  string
-	SslCertPath string
-	SslKeyPath  string
+	ServerPort     string
+	SslCertPath    string
+	SslKeyPath     string
+	TrustedProxies []string
 )
 
 var (
@@ -65,10 +67,25 @@ var (
 			return
 		},
 	}
+
+	trustedProxiesFlag = cli.StringSliceFlag{
+		Name:    "trusted_proxies",
+		Usage:   "Trusted proxies, example: --trusted_proxies 127.0.0.1,172.0.0.1",
+		EnvVars: []string{"TRUSTED_PROXIES"},
+		Value:   cli.NewStringSlice(),
+		Action: func(ctx *cli.Context, trustedProxies []string) (err error) {
+			if len(trustedProxies) != 0 {
+				log.Infof("Trust proxies: %v.", trustedProxies)
+				TrustedProxies = trustedProxies
+			}
+			return
+		},
+	}
 )
 
 var GinFlags = []cli.Flag{
 	&portFlag,
 	&sslCertFlag,
 	&sslKeyFlag,
+	&trustedProxiesFlag,
 }
