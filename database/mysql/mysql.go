@@ -2,10 +2,10 @@ package mysql
 
 import (
 	"fmt"
+	"github.com/Fu-XDU/mingfu_go_common/flags"
 	"github.com/labstack/gommon/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"mignfu_go_common/flags"
 	"time"
 )
 

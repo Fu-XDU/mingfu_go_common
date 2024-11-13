@@ -2,9 +2,9 @@ package redis
 
 import (
 	"fmt"
+	"github.com/Fu-XDU/mingfu_go_common/flags"
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/gommon/log"
-	"mignfu_go_common/flags"
 )
 
 func NewConnOptionsFromFlags() *redis.Options {

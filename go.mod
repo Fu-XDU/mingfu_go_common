@@ -1,4 +1,4 @@
-module mignfu_go_common
+module github.com/Fu-XDU/mingfu_go_common
 
 go 1.23.1
 
