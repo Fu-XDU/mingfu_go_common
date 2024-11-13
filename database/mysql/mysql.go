@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"mignfu_common/flags"
+	"mignfu_go_common/flags"
 	"time"
 )
 

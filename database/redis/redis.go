@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/gommon/log"
-	"mignfu_common/flags"
+	"mignfu_go_common/flags"
 )
 
 func NewConnOptionsFromFlags() *redis.Options {

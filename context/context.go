@@ -3,7 +3,7 @@ package context
 import (
 	"context"
 	"google.golang.org/grpc/metadata"
-	"mignfu_common/constants"
+	"mignfu_go_common/constants"
 )
 
 func NewContextWithUuid(uuid string) (ctx context.Context) {
