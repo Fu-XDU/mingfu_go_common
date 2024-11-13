@@ -1,4 +1,4 @@
-module mignfu_common
+module mignfu_go_common
 
 go 1.23.1
 
