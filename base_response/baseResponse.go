@@ -3,6 +3,7 @@ package base_response
 var (
 	SUCCESS      = NewRetCode(0, "Success")
 	UnknownError = NewRetCode(10000, "Unknown error")
+	Unauthorized = NewRetCode(10001, "Unauthorized")
 )
 
 type Response struct {
