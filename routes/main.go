@@ -7,10 +7,6 @@ import (
 	"net/http"
 )
 
-var (
-	router = gin.Default()
-)
-
 func TlsHandler(port string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		secureMiddleware := secure.New(secure.Options{
@@ -28,6 +24,7 @@ func TlsHandler(port string) gin.HandlerFunc {
 
 // Run will start the server
 func Run(port, sslCertPath, sslKeyPath string, trustedProxies []string, getRoutes func(*gin.Engine)) {
+	router := gin.Default()
 	if len(trustedProxies) != 0 {
 		router.ForwardedByClientIP = true
 		err := router.SetTrustedProxies(trustedProxies)
