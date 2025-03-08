@@ -17,7 +17,7 @@ var (
 		Destination: &JwtSalt,
 		Action: func(ctx *cli.Context, salt string) (err error) {
 			if len(salt) < 32 {
-				err = fmt.Errorf("length of salt should be at least 32 bytes, but got %v.", len(salt))
+				err = fmt.Errorf("length of salt should be at least 32 bytes, but got %v", len(salt))
 			}
 			auth.SetJwtSalt(salt)
 			return
