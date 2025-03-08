@@ -11,7 +11,7 @@ var (
 	tgBotTokenFlag = cli.StringFlag{
 		Name:        "tg.bot_token",
 		Usage:       "Telegram bot token",
-		Required:    true,
+		Required:    false,
 		EnvVars:     []string{"TG_BOT_TOKEN"},
 		Destination: &BotToken,
 	}
@@ -19,7 +19,7 @@ var (
 	tgBotChatIDFlag = cli.StringFlag{
 		Name:        "tg.bot_chat_id",
 		Usage:       "Telegram bot chat ID",
-		Required:    true,
+		Required:    false,
 		EnvVars:     []string{"TG_BOT_CHAT_ID"},
 		Destination: &BotChatID,
 	}
