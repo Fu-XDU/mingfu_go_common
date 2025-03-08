@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func Post(data interface{}, url string) (body []byte, err error) {
+func Post(url string, data interface{}) (body []byte, err error) {
 	jsonStr, err := json.Marshal(data)
 	if err != nil {
 		return
