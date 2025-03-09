@@ -11,6 +11,13 @@ type Bot struct {
 	sendMessageUrl string
 }
 
+func NewBot(token string) *Bot {
+	return &Bot{
+		token:          token,
+		sendMessageUrl: fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", token),
+	}
+}
+
 type SendMessageResponse struct {
 	OK     bool `json:"ok"`
 	Result struct {
@@ -92,11 +99,4 @@ func (b *Bot) SendMessage(msg string, chatId string, parseMode BotMessageType, o
 	}
 
 	return
-}
-
-func NewBot(token string) *Bot {
-	return &Bot{
-		token:          token,
-		sendMessageUrl: fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", token),
-	}
 }
