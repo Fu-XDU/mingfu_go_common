@@ -32,34 +32,44 @@ type SendMessageResponse struct {
 	} `json:"result"`
 }
 
+// BotMessageType 定义消息类型枚举
+type BotMessageType string
+
+const (
+	Text       BotMessageType = "Text"
+	Markdown   BotMessageType = "Markdown"
+	MarkdownV2 BotMessageType = "MarkdownV2"
+	HTML       BotMessageType = "HTML"
+)
+
 // SendTextMessage 发送普通文本消息
 func (b *Bot) SendTextMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.sendMessage(msg, chatId, "")
+	return b.SendMessage(msg, chatId, Text)
 }
 
 // SendMarkdownMessage 发送 Markdown 格式的消息
 func (b *Bot) SendMarkdownMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.sendMessage(msg, chatId, "Markdown")
+	return b.SendMessage(msg, chatId, Markdown)
 }
 
 // SendMarkdownV2Message 发送 MarkdownV2 格式的消息
 func (b *Bot) SendMarkdownV2Message(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.sendMessage(msg, chatId, "MarkdownV2")
+	return b.SendMessage(msg, chatId, MarkdownV2)
 }
 
 // SendHtmlMessage 发送 HTML 格式的消息
 func (b *Bot) SendHtmlMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.sendMessage(msg, chatId, "HTML")
+	return b.SendMessage(msg, chatId, HTML)
 }
 
-// sendMessage 发送消息的底层实现
-func (b *Bot) sendMessage(msg string, chatId string, parseMode string) (resp *SendMessageResponse, err error) {
+// SendMessage 发送消息的底层实现
+func (b *Bot) SendMessage(msg string, chatId string, parseMode BotMessageType) (resp *SendMessageResponse, err error) {
 	// 构造消息数据
 	data := map[string]interface{}{
 		"chat_id": chatId,
 		"text":    msg,
 	}
-	if len(parseMode) != 0 {
+	if parseMode != Text {
 		data["parse_mode"] = parseMode
 	}
 

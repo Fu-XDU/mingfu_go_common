@@ -42,7 +42,7 @@ func TestBot_SendMessage(t *testing.T) {
 			}
 
 			b := NewBot(tt.fields.token)
-			_, err := b.SendMessage(tt.args.msg, tt.args.chatId)
+			_, err := b.SendMessage(tt.args.msg, tt.args.chatId, Text)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("SendMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}
