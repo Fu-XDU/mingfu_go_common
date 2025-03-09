@@ -6,12 +6,15 @@ import (
 )
 
 func TestBot_SendMessage(t *testing.T) {
+	token := ""
+	chatId := ""
 	type fields struct {
 		token string
 	}
 	type args struct {
-		msg    string
-		chatId string
+		msg     string
+		chatId  string
+		msgType BotMessageType
 	}
 	tests := []struct {
 		name    string
@@ -20,13 +23,38 @@ func TestBot_SendMessage(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "1",
+			name: "Text Message",
 			fields: fields{
-				token: "",
+				token: token,
 			},
 			args: args{
-				msg:    time.Now().Format(time.DateTime),
-				chatId: "",
+				msg:     time.Now().Format(time.DateTime),
+				chatId:  chatId,
+				msgType: Text,
+			},
+			wantErr: false,
+		},
+		{
+			name: "Markdown Message",
+			fields: fields{
+				token: token,
+			},
+			args: args{
+				msg:     time.Now().Format(time.DateTime),
+				chatId:  chatId,
+				msgType: Markdown,
+			},
+			wantErr: false,
+		},
+		{
+			name: "HTML Message",
+			fields: fields{
+				token: token,
+			},
+			args: args{
+				msg:     time.Now().Format(time.DateTime),
+				chatId:  chatId,
+				msgType: HTML,
 			},
 			wantErr: false,
 		},
@@ -42,7 +70,7 @@ func TestBot_SendMessage(t *testing.T) {
 			}
 
 			b := NewBot(tt.fields.token)
-			_, err := b.SendMessage(tt.args.msg, tt.args.chatId, Text)
+			_, err := b.SendMessage(tt.args.msg, tt.args.chatId, tt.args.msgType)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("SendMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}

@@ -36,10 +36,10 @@ type SendMessageResponse struct {
 type BotMessageType string
 
 const (
-	Text       BotMessageType = "Text"
-	Markdown   BotMessageType = "Markdown"
-	MarkdownV2 BotMessageType = "MarkdownV2"
-	HTML       BotMessageType = "HTML"
+	Text     BotMessageType = "Text"
+	Markdown BotMessageType = "Markdown"
+	HTML     BotMessageType = "HTML"
+	// MarkdownV2 BotMessageType = "MarkdownV2" // Not support yet
 )
 
 // SendTextMessage 发送普通文本消息
@@ -50,11 +50,6 @@ func (b *Bot) SendTextMessage(msg string, chatId string) (resp *SendMessageRespo
 // SendMarkdownMessage 发送 Markdown 格式的消息
 func (b *Bot) SendMarkdownMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
 	return b.SendMessage(msg, chatId, Markdown)
-}
-
-// SendMarkdownV2Message 发送 MarkdownV2 格式的消息
-func (b *Bot) SendMarkdownV2Message(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.SendMessage(msg, chatId, MarkdownV2)
 }
 
 // SendHtmlMessage 发送 HTML 格式的消息
