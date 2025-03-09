@@ -70,7 +70,13 @@ func TestBot_SendMessage(t *testing.T) {
 			}
 
 			b := NewBot(tt.fields.token)
-			_, err := b.SendMessage(tt.args.msg, tt.args.chatId, tt.args.msgType)
+			_, err := b.SendMessage(tt.args.msg, tt.args.chatId, tt.args.msgType, SendMessageOptions{
+				DisablePreview:           false,
+				DisableNotification:      false,
+				ProtectContent:           false,
+				ReplyToMessageID:         0,
+				AllowSendingWithoutReply: false,
+			})
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("SendMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}
