@@ -39,33 +39,55 @@ const (
 	Text     BotMessageType = "Text"
 	Markdown BotMessageType = "Markdown"
 	HTML     BotMessageType = "HTML"
-	// MarkdownV2 BotMessageType = "MarkdownV2" // Not support yet
 )
 
+// SendMessageOptions 发送消息的可选参数
+type SendMessageOptions struct {
+	DisablePreview           bool        // 关闭链接预览
+	DisableNotification      bool        // 静默消息，不触发通知
+	ProtectContent           bool        // 保护消息内容，防止转发
+	ReplyToMessageID         int         // 回复的消息 ID
+	AllowSendingWithoutReply bool        // 允许在没有有效回复时发送
+	ReplyMarkup              interface{} // 自定义键盘
+}
+
 // SendTextMessage 发送普通文本消息
-func (b *Bot) SendTextMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.SendMessage(msg, chatId, Text)
+func (b *Bot) SendTextMessage(msg string, chatId string, opts ...SendMessageOptions) (resp *SendMessageResponse, err error) {
+	return b.SendMessage(msg, chatId, Text, opts...)
 }
 
 // SendMarkdownMessage 发送 Markdown 格式的消息
-func (b *Bot) SendMarkdownMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.SendMessage(msg, chatId, Markdown)
+func (b *Bot) SendMarkdownMessage(msg string, chatId string, opts ...SendMessageOptions) (resp *SendMessageResponse, err error) {
+	return b.SendMessage(msg, chatId, Markdown, opts...)
 }
 
 // SendHtmlMessage 发送 HTML 格式的消息
-func (b *Bot) SendHtmlMessage(msg string, chatId string) (resp *SendMessageResponse, err error) {
-	return b.SendMessage(msg, chatId, HTML)
+func (b *Bot) SendHtmlMessage(msg string, chatId string, opts ...SendMessageOptions) (resp *SendMessageResponse, err error) {
+	return b.SendMessage(msg, chatId, HTML, opts...)
 }
 
 // SendMessage 发送消息的底层实现
-func (b *Bot) SendMessage(msg string, chatId string, parseMode BotMessageType) (resp *SendMessageResponse, err error) {
+func (b *Bot) SendMessage(msg string, chatId string, parseMode BotMessageType, opts ...SendMessageOptions) (resp *SendMessageResponse, err error) {
 	// 构造消息数据
 	data := map[string]interface{}{
 		"chat_id": chatId,
 		"text":    msg,
 	}
+
 	if parseMode != Text {
 		data["parse_mode"] = parseMode
+	}
+
+	// 解析可选参数
+	var options SendMessageOptions
+	if len(opts) > 0 {
+		options = opts[0]
+		data["disable_web_page_preview"] = options.DisablePreview
+		data["disable_notification"] = options.DisableNotification
+		data["protect_content"] = options.ProtectContent
+		data["reply_to_message_id"] = options.ReplyToMessageID
+		data["allow_sending_without_reply"] = options.AllowSendingWithoutReply
+		data["reply_markup"] = options.ReplyMarkup
 	}
 
 	// 发送请求
