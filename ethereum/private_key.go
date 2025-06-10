@@ -14,6 +14,10 @@ func PrivateKeyToAddress(key *ecdsa.PrivateKey) common.Address {
 	return crypto.PubkeyToAddress(key.PublicKey)
 }
 
+func PrivateKeyToPublicKey(key *ecdsa.PrivateKey) ecdsa.PublicKey {
+	return key.PublicKey
+}
+
 func PrivateKeyToHex(key *ecdsa.PrivateKey, withPrefix bool) (h string) {
 	h = common.Bytes2Hex(crypto.FromECDSA(key))
 	if withPrefix {

@@ -20,5 +20,5 @@ func PublicKeyToHex(key *ecdsa.PublicKey, withPrefix bool) (h string) {
 }
 
 func HexToPublicKey(keyHex string) (*ecdsa.PublicKey, error) {
-	return crypto.UnmarshalPubkey(common.Hex2Bytes(keyHex))
+	return crypto.UnmarshalPubkey(common.FromHex(keyHex))
 }
