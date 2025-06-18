@@ -16,9 +16,6 @@ func ExecShellAt(command, dir string) (string, error) {
 	cmd.Dir = dir
 	output, err := cmd.CombinedOutput()
 
-	if err != nil {
-		return "", err
-	}
 	return strings.TrimSpace(string(output)), err
 }
 
