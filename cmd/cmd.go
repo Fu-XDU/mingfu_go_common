@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/labstack/gommon/log"
 	"os/exec"
 	"strings"
 )
@@ -18,7 +17,7 @@ func ExecShellAt(command, dir string) (string, error) {
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
-		log.Infof("Exec shell cmd `%s` failed, output:%v, error: %v", cmd, string(output), err)
+		return "", err
 	}
 	return strings.TrimSpace(string(output)), err
 }
@@ -28,7 +27,7 @@ func ExecShellFile(shFilePath string) (string, error) {
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
-		log.Infof("Exec shell cmd `%s` failed, output:%v, error: %v", cmd, string(output), err)
+		return "", err
 	}
 	return strings.TrimSpace(string(output)), err
 }

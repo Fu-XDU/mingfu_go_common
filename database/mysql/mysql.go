@@ -48,16 +48,16 @@ func Connect(options *ConnOptions, config *gorm.Config, initCallback func(*gorm.
 
 	db, err = gorm.Open(mysql.Open(options.dsn()), config)
 	if err != nil {
-		log.Errorf("Connect mysql %s failed, err: %v", options.identity(), err)
+		log.Errorf("Connect MySQL %s failed: %v", options.identity(), err)
 		return
 	}
-	log.Infof("Successfully connected to mysql %s", options.identity())
+	log.Infof("Successfully connected to MySQL %s", options.identity())
 
 	if err = initCallback(db); err != nil {
-		log.Errorf("Initialize mysql database %s failed, err: %v", options.identity(), err)
+		log.Errorf("Initialize MySQL database %s failed: %v", options.identity(), err)
 		return
 	}
-	log.Infof("Successfully initialize mysql")
+	log.Infof("Successfully initialize MySQL")
 
 	go monitorConnection(db, options, config)
 	return
@@ -69,16 +69,16 @@ func monitorConnection(db *gorm.DB, options *ConnOptions, config *gorm.Config) {
 	for {
 		err = checkDBConnection(db)
 		if err != nil {
-			log.Errorf("Lost database connection, attempting to reconnect: %v", err)
+			log.Errorf("Lost MySQL connection: %v, attempting to reconnect: %v", err, options.identity())
 
 			for {
 				newDb, err = gorm.Open(mysql.Open(options.dsn()), config)
 				if err != nil {
-					log.Errorf("Reconnect failed, retrying in 2 seconds, err: %v", err)
+					log.Errorf("Reconnect MySQL %s failed: %v, retrying in 2 seconds", options.identity(), err)
 					time.Sleep(2 * time.Second)
 					continue
 				}
-				log.Info("Reconnected to MySQL successfully.")
+				log.Infof("Reconnected to MySQL %s successfully.", options.identity())
 				*db = *newDb
 				break
 			}

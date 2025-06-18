@@ -25,16 +25,16 @@ func Connect(options *redis.Options, initCallback func(*redis.Client) error) (rd
 
 	_, err = rdb.Ping().Result()
 	if err != nil {
-		log.Errorf("Connect to redis '%s'@'%s', DB:%d failed", options.Username, options.Addr, options.DB)
+		log.Errorf("Connect to Redis %s failed: %v", redisIdentity(options), err)
 		return
 	}
 
 	if err = initCallback(rdb); err != nil {
-		log.Errorf("Initialize mysql database '%s'@'%s', DB:%d failed, err: %v", options.Username, options.Addr, options.DB, err)
+		log.Errorf("Initialize Redis %s failed: %v", redisIdentity(options), err)
 		return
 	}
 
-	log.Infof("Successfully connected to redis '%s'@'%s', DB:%d", options.Username, options.Addr, options.DB)
+	log.Infof("Successfully connected to Redis %s", redisIdentity(options))
 	return
 }
 
@@ -45,7 +45,7 @@ func Subscribe(rdb *redis.Client, channels ...string) (ch <-chan *redis.Message,
 	pubSub := rdb.Subscribe(channels...)
 	_, err = pubSub.Receive()
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 	ch = pubSub.Channel()
 	return
@@ -64,4 +64,8 @@ func Set(rdb *redis.Client, key, value string) (val string, err error) {
 func Del(rdb *redis.Client, key string) (val int64, err error) {
 	val, err = rdb.Del(key).Result()
 	return
+}
+
+func redisIdentity(options *redis.Options) string {
+	return fmt.Sprintf("'%s'@'%s', DB:%d", options.Username, options.Addr, options.DB)
 }

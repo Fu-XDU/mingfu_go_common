@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/labstack/gommon/log"
 	"io"
 	"net/http"
 )
@@ -37,7 +36,6 @@ func Post(url string, data interface{}) (body []byte, err error) {
 }
 
 func Get(url string) (body []byte, err error) {
-	log.Infof("HTTP GET: %v", url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return
