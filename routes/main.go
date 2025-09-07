@@ -7,7 +7,11 @@ import (
 	"net/http"
 )
 
-func TlsHandler(port string) gin.HandlerFunc {
+var (
+	Router *gin.Engine
+)
+
+func tlsHandler(port string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		secureMiddleware := secure.New(secure.Options{
 			SSLRedirect: true,
@@ -24,23 +28,23 @@ func TlsHandler(port string) gin.HandlerFunc {
 
 // Run will start the server
 func Run(port, sslCertPath, sslKeyPath string, trustedProxies []string, getRoutes func(*gin.Engine)) {
-	router := gin.Default()
+	Router = gin.Default()
 	if len(trustedProxies) != 0 {
-		router.ForwardedByClientIP = true
-		err := router.SetTrustedProxies(trustedProxies)
+		Router.ForwardedByClientIP = true
+		err := Router.SetTrustedProxies(trustedProxies)
 		if err != nil {
 			log.Fatalf("Wrong TrustedProxies, %v", err)
 		}
 	}
-	router.Use(passCors)
-	getRoutes(router)
+	Router.Use(passCors)
+	getRoutes(Router)
 	if len(sslCertPath) != 0 && len(sslKeyPath) != 0 {
 		log.Println("SSL is enabled.")
-		router.Use(TlsHandler(port))
-		log.Fatal(router.RunTLS(":"+port, sslCertPath, sslKeyPath))
+		Router.Use(tlsHandler(port))
+		log.Fatal(Router.RunTLS(":"+port, sslCertPath, sslKeyPath))
 	} else {
 		log.Println("SSL is not enabled.")
-		log.Fatal(router.Run(":" + port))
+		log.Fatal(Router.Run(":" + port))
 	}
 }
 
