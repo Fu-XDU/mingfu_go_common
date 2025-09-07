@@ -1,9 +1,12 @@
 package base_response
 
 var (
-	SUCCESS      = NewRetCode(0, "Success")
-	UnknownError = NewRetCode(10000, "Unknown error")
-	Unauthorized = NewRetCode(10001, "Unauthorized")
+	SUCCESS        = NewRetCode(0, "Success")
+	UnknownError   = NewRetCode(10000, "Unknown error")
+	Unauthorized   = NewRetCode(10001, "Unauthorized")
+	WrongParams    = NewRetCode(10002, "Wrong params")
+	BindDataFailed = NewRetCode(10003, "Bind data failed")
+	Forbidden      = NewRetCode(10004, "Forbidden")
 )
 
 type Response struct {
