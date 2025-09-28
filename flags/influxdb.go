@@ -22,7 +22,7 @@ var (
 		Name:        "InfluxdbToken",
 		Usage:       "Influxdb token",
 		Required:    true,
-		EnvVars:     []string{"INFLUXDB_USER"},
+		EnvVars:     []string{"INFLUXDB_TOKEN"},
 		Destination: &InfluxdbToken,
 	}
 
