@@ -17,3 +17,11 @@ func NewClientConfigFromFlags() *influxdb3.ClientConfig {
 func Connect(config *influxdb3.ClientConfig) (client *influxdb3.Client, err error) {
 	return influxdb3.New(*config)
 }
+
+func Close(client *influxdb3.Client) (err error) {
+	if client == nil {
+		return
+	}
+	err = client.Close()
+	return
+}
