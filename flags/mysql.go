@@ -14,7 +14,7 @@ var (
 	mysqlHostFlag = cli.StringFlag{
 		Name:        "MysqlHost",
 		Usage:       "Mysql host",
-		Value:       "mysql.common.svc.cluster.local",
+		Value:       "127.0.0.1",
 		EnvVars:     []string{"MYSQL_HOST"},
 		Destination: &MysqlHost,
 	}
@@ -38,7 +38,7 @@ var (
 	mysqlPasswdFlag = cli.StringFlag{
 		Name:        "MysqlPasswd",
 		Usage:       "Mysql password",
-		Value:       "d26363099ae255a949b56c64e83c30e8",
+		Required:    true,
 		EnvVars:     []string{"MYSQL_PASSWD"},
 		Destination: &MysqlPasswd,
 	}
@@ -46,7 +46,7 @@ var (
 	mysqlDBFlag = cli.StringFlag{
 		Name:        "MysqlDB",
 		Usage:       "Mysql database",
-		Value:       "job_optimizer_modules",
+                Required:    true,
 		EnvVars:     []string{"MYSQL_DB"},
 		Destination: &MysqlDB,
 	}

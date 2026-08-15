@@ -15,7 +15,7 @@ var (
 	redisHostFlag = cli.StringFlag{
 		Name:        "RedisHost",
 		Usage:       "RedisHost",
-		Value:       "redis.common.svc.cluster.local",
+		Value:       "127.0.0.1",
 		EnvVars:     []string{"REDIS_HOST"},
 		Destination: &RedisHost,
 	}
@@ -47,7 +47,7 @@ var (
 	redisPasswdFlag = cli.StringFlag{
 		Name:        "RedisPasswd",
 		Usage:       "Database password for Redis",
-		Value:       "9b56635a949c64e0e8309d263ae2583c",
+                Required:    true,
 		EnvVars:     []string{"REDIS_PASSWD"},
 		Destination: &RedisPasswd,
 	}

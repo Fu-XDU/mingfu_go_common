@@ -13,7 +13,7 @@ var (
 	influxdbHostFlag = cli.StringFlag{
 		Name:        "InfluxdbHost",
 		Usage:       "Influxdb host",
-		Value:       "influxdb.common.svc.cluster.local",
+		Value:       "127.0.0.1",
 		EnvVars:     []string{"INFLUXDB_HOST"},
 		Destination: &InfluxdbHost,
 	}
